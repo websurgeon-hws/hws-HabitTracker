@@ -5,5 +5,9 @@
 import Foundation
 
 class User: ObservableObject {
-    @Published var activities = [Activity]()
+    @Published var activities: [Activity]
+    
+    init(activities: [Activity] = []) {
+        self.activities = activities
+    }
 }
