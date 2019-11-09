@@ -4,22 +4,14 @@
 
 import SwiftUI
 
-struct AddActivityView: View {
-    var activities: [Activity]
-    
-    var body: some View {
-        Text("TODO: Add Activity")
-    }
-}
-
 struct ContentView: View {
-    let user: User
+    @ObservedObject var activities: Activities
     @State private var showingAddActivity = false
 
     var body: some View {
         NavigationView {
             List {
-                ForEach(user.activities) {
+                ForEach(activities.items) {
                     Text("\($0.title)")
                 }
             }
@@ -32,14 +24,14 @@ struct ContentView: View {
                 }
             )
             .sheet(isPresented: $showingAddActivity) {
-                AddActivityView(activities: self.user.activities)
+                AddActivityView(activities: self.activities)
             }
         }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
-    static let user = User(activities: [
+    static let activities = Activities(items: [
         Activity(title: "Acitivty 1",
                  description: "Activity 1 Detail"),
         Activity(title: "Acitivty 2",
@@ -49,6 +41,6 @@ struct ContentView_Previews: PreviewProvider {
     ])
 
     static var previews: some View {
-        ContentView(user: user)
+        ContentView(activities: activities)
     }
 }
